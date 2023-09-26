@@ -2,7 +2,12 @@
   "applinks": {
     "apps": [],
     "details": [
-      {
+       {
+        "appID": "53VUVA3CT9.com.cebbank.xyk.ciap",
+        "paths": [
+          "/ccccfk/*"
+        ]
+      },{
         "appID": "53VUVA3CT9.com.cebbank.ciap.mp",
         "paths": [
           "/ccccfk/*"
