@@ -24,13 +24,46 @@
 <script type="text/javascript"
             src="https://webapi.amap.com/maps?v=2.0&key=f57bf466ecafcc9f34ba65dcb7eceaee"></script>
 <script type="text/javascript">
-    navigator.geolocation.getCurrentPosition(function(position){
-      alert(map.getCenter(position.coords.latitude))
-    },function(error){
-      alert('error'+error.message)
-    }
-    );
+//    if(navigator.geolocation){
+//     navigator.geolocation.getCurrentPosition(function(position){
+//       alert(map.getCenter(position.coords.latitude))
+//     },function(error){
+//       alert('error'+error.message)
+//     }
+//     );
+//   }else{
+//     alert("不支持")
+//   }
+
+  AMap.plugin('AMap.Geolocation', function() {
+  var geolocation = new AMap.Geolocation({
+    enableHighAccuracy: true, // 是否使用高精度定位，默认：true
+    timeout: 10000, // 设置定位超时时间，默认：无穷大
+    offset: [10, 20],  // 定位按钮的停靠位置的偏移量
+    zoomToAccuracy: true,  //  定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+    position: 'RB' //  定位按钮的排放位置,  RB表示右下
+  })
+
+  geolocation.getCurrentPosition(function(status,result){
+        if(status=='complete'){
+            onComplete(result)
+        }else{
+            onError(result)
+        }
+  });
+
+  function onComplete (data) {
+    // data是具体的定位信息
+    alert('高德定位成功='+data.position)
+  }
+
+  function onError (data) {
+    // 定位出错
+    alert('高德定位失败='+data.message)
+  }
+})
     
+    // http://weightzhang.github.io/amaptest.html
 </script>
 </body>
 </html>
