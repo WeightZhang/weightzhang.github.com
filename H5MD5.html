@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>拍照并计算 MD5</title>
+    <!-- 引入 CryptoJS 库用于计算 MD5 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</head>
+
+<body>
+    <!-- 用于拍照的输入框 -->
+    <input type="file" id="cameraInput" accept="image/*;capture=camera">
+    <!-- 用于显示 MD5 值的段落 -->
+    <p id="md5Result">MD5 值将显示在这里</p>
+
+    <script>
+        // 获取输入框和结果显示元素
+        const cameraInput = document.getElementById('cameraInput');
+        const md5Result = document.getElementById('md5Result');
+
+        // 监听输入框的 change 事件
+        cameraInput.addEventListener('change', function () {
+            // 获取用户选择的文件
+            const file = this.files[0];
+            if (file) {
+                // 创建一个 FileReader 对象
+                const reader = new FileReader();
+                // 当文件读取完成时触发的事件
+                reader.onload = function (e) {
+                    // 获取文件的二进制数据
+                    const arrayBuffer = e.target.result;
+                    // 将二进制数据转换为 WordArray 对象
+                    const wordArray = CryptoJS.lib.WordArray.create(arrayBuffer);
+                    // 计算 MD5 值
+                    const md5 = CryptoJS.MD5(wordArray);
+                    // 将 MD5 值转换为十六进制字符串
+                    const md5Hex = md5.toString();
+                    // 显示 MD5 值
+                    md5Result.textContent = `图片的 MD5 值是: ${md5Hex}`;
+                };
+                // 以二进制形式读取文件
+                reader.readAsArrayBuffer(file);
+            }
+        });
+    </script>
+</body>
+
+</html>
